@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/test">
+        <file alias="test.gltf">assets/test/test.gltf</file>
+    </qresource>
+</RCC>

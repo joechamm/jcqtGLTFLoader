@@ -25,4 +25,30 @@
   <ItemGroup>
     <Text Include="README.md" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GLTFLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="GLTFLoader.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GLTFLoaderTest.cpp">
+      <Filter>Source Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="jcqtGLTFLoader.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\test\test.gltf">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="jcqtGLTFLoader.pri">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -124,25 +124,27 @@ void GLTFLoader::printJsonObject ( const QJsonObject& obj, int maxDepth ) const
 		switch ( childVal.type() )
 		{
 		case QJsonValue::Bool:
-			qDebug () << (childVal.toBool () ? "TRUE" : "FALSE");
+			qDebug () << "Type: BOOL, Value: " << ( childVal.toBool () ? "TRUE" : "FALSE" );
 			break;
 		case QJsonValue::Double:
-			qDebug () << QString::number ( childVal.toDouble () );
+			qDebug () << "Type: DOUBLE, Value: " << QString::number (childVal.toDouble ());
 			break;
 		case QJsonValue::String:
-			qDebug () << childVal.toString ();
+			qDebug () << "Type: STRING, Value: " << childVal.toString ();
 			break;
 		case QJsonValue::Array:
+			qDebug () << "Type: ARRAY, printing elements... " << Qt::endl;
 			printJsonArray ( childVal.toArray (), maxDepth - 1 );
 			break;
 		case QJsonValue::Object:
+			qDebug () << "Type: OBJECT, printing keys..." << Qt::endl;
 			printJsonObject ( childVal.toObject (), maxDepth - 1 );
 			break;
 		case QJsonValue::Null:
-			qDebug () << "NULL";
+			qDebug () << "Type: NULL";
 			break;
 		default:
-			qDebug () << "UNKNOWN TYPE";
+			qDebug () << "Type: UNKNOWN";
 			break;
 		}
 
@@ -167,25 +169,27 @@ void GLTFLoader::printJsonArray ( const QJsonArray& arr, int maxDepth ) const
 		switch ( arrElem.type () )
 		{
 		case QJsonValue::Bool:
-			qDebug () << ( arrElem.toBool () ? "TRUE" : "FALSE" );
+			qDebug () << "Type: BOOL, Value: " << ( arrElem.toBool () ? "TRUE" : "FALSE" );
 			break;
 		case QJsonValue::Double:
-			qDebug () << QString::number ( arrElem.toDouble () );
+			qDebug () << "Type: DOUBLE, Value: " << QString::number ( arrElem.toDouble () );
 			break;
 		case QJsonValue::String:
-			qDebug () << arrElem.toString ();
+			qDebug () << "Type: STRING, Value: " << arrElem.toString ();
 			break;
 		case QJsonValue::Array:
+			qDebug () << "Type: ARRAY, printing elements... " << Qt::endl;
 			printJsonArray ( arrElem.toArray (), maxDepth - 1 );
 			break;
 		case QJsonValue::Object:
+			qDebug () << "Type: OBJECT, printing keys..." << Qt::endl;
 			printJsonObject ( arrElem.toObject (), maxDepth - 1 );
 			break;
 		case QJsonValue::Null:
-			qDebug () << "NULL";
+			qDebug () << "Type: NULL";
 			break;
 		default:
-			qDebug () << "UNKNOWN TYPE";
+			qDebug () << "Type: UNKNOWN";
 			break;
 		}
 

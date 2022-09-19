@@ -7,7 +7,10 @@
 message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./GLTFLoader.h 
+HEADERS += ./GLTFLoader.h \
+    ./GLTFBuffer.h \
+    ./GLTFException.h 
 SOURCES += ./GLTFLoader.cpp \
+    ./GLTFBuffer.cpp \
     ./GLTFLoaderTest.cpp
 RESOURCES += jcqtGLTFLoader.qrc

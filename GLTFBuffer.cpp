@@ -219,13 +219,26 @@ namespace jcqt
 			qsizetype idxBase64 = uriString.indexOf ( base64Str );
 			if ( -1 != idxBase64 )
 			{
-				m_bufferData = QByteArray::fromBase64 ( uriString.sliced ( idxBase64 + base64Str.size () + 1 ).toLocal8Bit () );
+				QString dataStr = uriString.sliced ( idxBase64 + base64Str.size () );
+				QByteArray bufferData = dataStr.toUtf8 ();
+	//			m_bufferData = QByteArray::fromBase64 ( uriString.sliced ( idxBase64 + base64Str.size () + 1 ).toLocal8Bit () );
+				QByteArray::FromBase64Result bufferDataDecoded = QByteArray::fromBase64Encoding ( bufferData );
 				// Ensure that the data we read has the same size as the 'byteLength' value in our JSON object says.
-				if ( m_bufferData.size () != byteLength )
+	//			if ( m_bufferData.size () != byteLength )
+				if ( bufferDataDecoded.decodingStatus != QByteArray::Base64DecodingStatus::Ok )
 				{
-					m_bufferData.clear ();
+					throw new GLTFException ( "BASE 64 DECODING FAILED" );
+				}
+
+				QByteArray decodedData = bufferDataDecoded.decoded;
+
+//				if(bufferDataDecoded.decoded.size() != byteLength )
+				if(decodedData.size() != byteLength)
+				{
+				//	m_bufferData.clear ();
 					throw new GLTFException ( "BYTE LENGTH MISMATCH EXCEPTION" );
 				}
+				m_bufferData.setRawData ( decodedData.data (), byteLength );
 				m_byteLength = byteLength;
 				return true;
 			}
@@ -373,6 +386,8 @@ namespace jcqt
 
 				throw new GLTFException ( "INVALID DATA FROM JSON" );
 			}
+
+			return false;
 		}
 		catch ( const GLTFException& e )
 		{

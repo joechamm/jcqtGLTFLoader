@@ -128,4 +128,9 @@
   </ImportGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties assets_4test_4test_1gltf__JsonSchema="https://raw.githubusercontent.com/KhronosGroup/glTF/main/specification/2.0/schema/glTF.schema.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

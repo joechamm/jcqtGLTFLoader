@@ -1,5 +1,5 @@
 /*****************************************************************//**
- * \file   GLTFLoader.h
+ * \file   GLTFException.h
  * \licence MIT License
 
 Copyright (c) 2022 Joseph Cunningham
@@ -21,42 +21,42 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
- * \brief  
+ * \brief  Exception handling
  * 
  * \author joechamm
  * \date   September 2022
  *********************************************************************/
-#ifndef __GLTF_LOADER_H__
-#define __GLTF_LOADER_H__
+#ifndef __GLTF_EXCEPTION_H__
+#define __GLTF_EXCEPTION_H__
 
-
-#include <QObject>
-#include <QJsonDocument>
+#include <QException>
 
 namespace jcqt
 {
-	class GLTFLoader : public QObject
+	class GLTFException : public QException
 	{
-		Q_OBJECT
-
 	public:
-		GLTFLoader ( QObject* parent = nullptr );
-		~GLTFLoader ();
+		GLTFException ( const QByteArray& message ) : m_message ( message ) {}
+		explicit GLTFException ( const char* message ) : m_message ( message ) {}
+		explicit GLTFException ( const QString& message ) : m_message ( message.toLocal8Bit () ) {}
 
-		bool loadGLTF ( const QString& filename );
-		bool isJsonArray ();
-		bool isJsonObject ();
-		QJsonArray jsonArray () const;
-		QJsonObject jsonObject () const;
+		GLTFException* clone () const override
+		{
+			return new GLTFException ( *this );
+		}
 
-		void printJsonObject ( const QJsonObject& obj, int maxDepth = 8 ) const;
-		void printJsonArray ( const QJsonArray& arr, int maxDepth = 8 ) const;
-		void printJsonDocument ( int maxDepth = 8 ) const;
+		void raise () const override
+		{
+			throw* this;
+		}
 
-	private:
-		QJsonDocument m_document;
+		const char* what () const
+		{
+			return m_message.constData ();
+		}
+	protected:
+		QByteArray m_message;
 	};
 }
 
-#endif // !__GLTF_LOADER_H__
-
+#endif // !__JCQT_EXCEPTION_H__

@@ -43,7 +43,7 @@ private slots:
 	void testLoadGLTF ()
 	{
 		QString testFilename = ":/test/test.gltf";
-		GLTFLoader loader;
+		jcqt::GLTFLoader loader;
 		bool loadSuccess = loader.loadGLTF ( testFilename );
 		if ( loadSuccess )
 		{

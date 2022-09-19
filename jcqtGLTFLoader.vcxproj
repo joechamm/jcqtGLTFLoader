@@ -98,6 +98,7 @@
     <Text Include="README.md" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GLTFBuffer.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="GLTFScene.cpp" />
     <QtMoc Include="GLTFLoaderTest.cpp">
@@ -116,9 +117,12 @@
   <ItemGroup>
     <None Include="assets\test\test.gltf" />
     <None Include="jcqtGLTFLoader.pri" />
+    <None Include="jcqtGLTFLoader.pro" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="GLTFBuffer.h" />
     <ClInclude Include="GLTFScene.h" />
+    <ClInclude Include="GLTFException.h" />
     <ClInclude Include="vec4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

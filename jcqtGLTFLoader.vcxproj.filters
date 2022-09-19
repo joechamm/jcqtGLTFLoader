@@ -32,6 +32,9 @@
     <ClCompile Include="GLTFScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GLTFBuffer.cpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GLTFLoader.h">
@@ -39,6 +42,9 @@
     </QtMoc>
     <QtMoc Include="GLTFLoaderTest.cpp">
       <Filter>Source Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GLTFBuffer.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -53,12 +59,18 @@
     <None Include="jcqtGLTFLoader.pri">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="jcqtGLTFLoader.pro">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLTFScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vec4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTFException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

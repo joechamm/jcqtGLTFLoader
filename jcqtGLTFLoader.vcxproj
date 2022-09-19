@@ -100,7 +100,6 @@
   <ItemGroup>
     <ClCompile Include="GLTFBuffer.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
-    <ClCompile Include="GLTFScene.cpp" />
     <QtMoc Include="GLTFLoaderTest.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -121,9 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GLTFBuffer.h" />
-    <ClInclude Include="GLTFScene.h" />
     <ClInclude Include="GLTFException.h" />
-    <ClInclude Include="vec4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

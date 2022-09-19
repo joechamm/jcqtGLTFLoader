@@ -44,10 +44,15 @@ namespace jcqt
 		~GLTFLoader ();
 
 		bool loadGLTF ( const QString& filename );
-		bool isJsonArray ();
-		bool isJsonObject ();
+		bool isJsonArray () const;
+		bool isJsonObject () const;
 		QJsonArray jsonArray () const;
 		QJsonObject jsonObject () const;
+
+		bool containsAtTopLevel ( const QString& key ) const;
+
+		QJsonObject getBuffer ( qsizetype bufferIndex ) const;
+		QJsonArray getBuffers () const;
 
 		void printJsonObject ( const QJsonObject& obj, int maxDepth = 8 ) const;
 		void printJsonArray ( const QJsonArray& arr, int maxDepth = 8 ) const;

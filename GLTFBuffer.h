@@ -43,7 +43,7 @@ namespace jcqt
 	public:
 		GLTFBuffer ( QObject* parent = nullptr );
 		GLTFBuffer ( const QJsonObject& jsonObj, QObject* parent = nullptr );
-		GLTFBuffer ( const QString& uri, qsizetype byteLength, QObject* parent = nullptr );
+//		GLTFBuffer ( const QString& uri, qsizetype byteLength, QObject* parent = nullptr );
 		~GLTFBuffer ();
 
 		/**
@@ -79,9 +79,7 @@ namespace jcqt
 
 		static bool externalUriExists ( const QJsonObject& jsonObj );
 		static bool isRelativeFromJson ( const QJsonObject& jsonObj );
-		static QString uriSchemeFromJson ( const QJsonObject& jsonObj );
-
-		
+		static QString uriSchemeFromJson ( const QJsonObject& jsonObj );		
 		
 		/**
 		 * setFromJson

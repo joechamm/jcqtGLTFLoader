@@ -21,8 +21,7 @@ namespace jcqt
 	{}
 
 	// TODO: implement
-	GLTFBuffer::GLTFBuffer ( const QString & uri, qsizetype byteLength, QObject * parent )
-	{}
+//	GLTFBuffer::GLTFBuffer ( const QString & uri, qsizetype byteLength, QObject * parent )	{}
 
 	GLTFBuffer::~GLTFBuffer ()
 	{}

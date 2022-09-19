@@ -29,6 +29,7 @@ SOFTWARE.
 
 #include <QTest>
 #include "GLTFLoader.h"
+#include "GLTFBuffer.h"
 
 class GLTFLoaderTest : public QObject
 {
@@ -55,6 +56,28 @@ private slots:
 			qDebug () << "loadGLTF FAILED!" << Qt::endl;
 		}
 		QVERIFY ( loadSuccess );
+	}
+
+	void testLoadGLTFBuffers ()
+	{
+		bool bufferSuccess = false;
+		QString testFilename = ":/test/test.gltf";
+		jcqt::GLTFLoader loader;
+		bool loadSuccess = loader.loadGLTF ( testFilename );
+		if ( loadSuccess )
+		{
+			QJsonObject jsonBuff0 = loader.getBuffer ( 0 );
+			if (!jsonBuff0.isEmpty () )
+			{
+				jcqt::GLTFBuffer gltfBuff0 ( jsonBuff0 );
+				bufferSuccess = gltfBuff0.loadData ();
+				if ( bufferSuccess )
+				{
+					qDebug () << "GLTFBuffer::loadData() SUCCESS!" << Qt::endl << "Data:" << Qt::endl << gltfBuff0.constData () << Qt::endl;
+				}
+			}
+		}
+		QVERIFY ( bufferSuccess );
 	}
 
 	void cleanupTestCase ()

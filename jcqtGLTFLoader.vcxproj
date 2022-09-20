@@ -98,7 +98,6 @@
     <Text Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLTFAccessor.cpp" />
     <ClCompile Include="GLTFBuffer.cpp" />
     <ClCompile Include="GLTFBufferView.cpp" />
     <ClCompile Include="GLTFImage.cpp" />
@@ -125,7 +124,7 @@
     <QtMoc Include="GLTFImage.h" />
     <QtMoc Include="GLTFBuffer.h" />
     <QtMoc Include="GLTFBufferView.h" />
-    <QtMoc Include="GLTFAccessor.h" />
+    <ClInclude Include="GLTFAccessor.h" />
     <ClInclude Include="GLTFException.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

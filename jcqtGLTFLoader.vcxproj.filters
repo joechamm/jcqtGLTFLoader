@@ -35,9 +35,6 @@
     <ClCompile Include="GLTFImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GLTFBufferView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="GLTFLoader.h">
@@ -50,9 +47,6 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="GLTFImage.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="GLTFBufferView.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -77,6 +71,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GLTFAccessor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTFBufferView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

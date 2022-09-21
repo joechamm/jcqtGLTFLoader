@@ -80,60 +80,6 @@ namespace jcqt
 		bufferView.m_jsonObject = jsonObj;
 		return bufferView;
 	}
-
-
-	class GLTFBufferView : public QObject
-	{
-		Q_OBJECT
-
-	public:
-		GLTFBufferView ( QObject* parent = nullptr );
-		GLTFBufferView ( const QJsonObject& jsonObj, QObject* parent = nullptr );
-		~GLTFBufferView ();
-
-		/*
-			https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#reference-bufferview
-			'bufferView' requires the 'buffer' field and 'byteLength' field to be present
-		*/
-		static bool isValidJson ( const QJsonObject& jsonObj );
-		static qsizetype getBufferIndexFromJson ( const QJsonObject& jsonObj );
-		static qsizetype getByteOffsetFromJson ( const QJsonObject& jsonObj );
-		static qsizetype getByteLengthFromJson ( const QJsonObject& jsonObj );
-		static qsizetype getByteStrideFromJson ( const QJsonObject& jsonObj );
-		static qsizetype getTargetFromJson ( const QJsonObject& jsonObj );
-		static QString getNameFromJson ( const QJsonObject& jsonObj );
-		static QJsonObject getExtensionsFromJson ( const QJsonObject& jsonObj );
-		static QJsonObject getExtrasFromJson ( const QJsonObject& jsonObj );
-
-		bool isValid () const;
-		bool hasByteOffset () const;
-		bool hasByteStride () const;
-		bool hasTarget () const;
-		bool hasName () const;
-		bool hasExtensions () const;
-		bool hasExtras () const;
-
-		qsizetype bufferIndex () const;
-		qsizetype byteOffset () const;
-		qsizetype byteLength () const;
-		qsizetype byteStride () const;
-		qsizetype target () const;
-
-		QString name () const;
-		QJsonObject extensions () const;
-		QJsonObject extras () const;
-
-		bool setJsonObject ( const QJsonObject& jsonObj );
-		bool setValuesFromJson ();
-
-	private:
-		qsizetype m_bufferIndex;
-		qsizetype m_byteOffset;
-		qsizetype m_byteLength;
-		qsizetype m_byteStride;
-		qsizetype m_target;
-		QJsonObject m_jsonObject;
-	};
 }
 
 #endif // !__GLTF_BUFFER_VIEW_H__

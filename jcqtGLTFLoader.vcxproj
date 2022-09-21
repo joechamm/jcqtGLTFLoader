@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GLTFBuffer.cpp" />
-    <ClCompile Include="GLTFBufferView.cpp" />
     <ClCompile Include="GLTFImage.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
     <QtMoc Include="GLTFLoaderTest.cpp">
@@ -123,7 +122,7 @@
   <ItemGroup>
     <QtMoc Include="GLTFImage.h" />
     <QtMoc Include="GLTFBuffer.h" />
-    <QtMoc Include="GLTFBufferView.h" />
+    <ClInclude Include="GLTFBufferView.h" />
     <ClInclude Include="GLTFAccessor.h" />
     <ClInclude Include="GLTFException.h" />
   </ItemGroup>

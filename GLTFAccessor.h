@@ -216,108 +216,6 @@ namespace jcqt
 		return accessor;		
 	}
 
-	//QList<std::array<float, 2>> getAccessorFloatMinMax ( const QJsonObject& jsonObj )
-	//{
-	//	QList<std::array<float, 2>> minMaxList;
-	//	bool hasMinMax = jsonObj.contains ( "min" ) && jsonObj.contains ( "max" );
-	//	if ( !hasMinMax )
-	//	{
-	//		qWarning () << "MIN/MAX NOT AVAILABLE. RETURNING EMPTY LIST" << Qt::endl;
-	//		return minMaxList;
-	//	}
-
-	//	quint64 compType = jsonObj.value ( "componentType" ).toInteger ();
-	//	if ( compType != 5126 /* FLOAT */ )
-	//	{
-	//		qWarning () << "COMPONENT TYPE ISN'T FLOAT. RETURNING EMPTY LIST" << Qt::endl;
-	//		return minMaxList;
-	//	}
-
-	//	QJsonArray minList = jsonObj.value ( "min" ).toArray ();
-	//	QJsonArray maxList = jsonObj.value ( "max" ).toArray ();
-	//	QString type = jsonObj.value ( "type" ).toString ();
-	//	
-	//	if ( type.compare ( "SCALAR", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 1;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "VEC2", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 2;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "VEC3", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 3;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "VEC4", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 4;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "MAT2", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 4;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "MAT3", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 9;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-	//	else if ( type.compare ( "MAT4", Qt::CaseInsensitive ) == 0 )
-	//	{
-	//		constexpr qsizetype COMP_COUNT = 16;
-	//		minMaxList.resize ( COMP_COUNT );
-	//		for ( qsizetype i = 0; i < COMP_COUNT; i++ )
-	//		{
-	//			float minVal = static_cast< float >( minList.at ( i ).toDouble () );
-	//			float maxVal = static_cast< float >( maxList.at ( i ).toDouble () );
-	//			minMaxList [ i ] = std::array<float, 2> ( { minVal, maxVal } );
-	//		}
-	//	}
-
-	//	return minMaxList;
-	//}
-
 	template<typename T>
 	QList<std::array<T, 2>> getAccessorMinMax ( const QJsonObject& jsonObj )
 	{
@@ -390,8 +288,18 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
+				
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -401,8 +309,18 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
+
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -412,8 +330,17 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -423,8 +350,17 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -434,8 +370,17 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -445,8 +390,17 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}
@@ -456,8 +410,17 @@ namespace jcqt
 			minMaxList.resize ( COMP_COUNT );
 			for ( qsizetype i = 0; i < COMP_COUNT; i++ )
 			{
-				T minVal = static_cast< T >( minList.at ( i ).toDouble () );
-				T maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				T minVal, maxVal;
+				if ( std::is_same<T, float>::value )
+				{
+					minVal = static_cast< T >( minList.at ( i ).toDouble () );
+					maxVal = static_cast< T >( maxList.at ( i ).toDouble () );
+				}
+				else
+				{
+					minVal = static_cast< T >( minList.at ( i ).toInteger () );
+					maxVal = static_cast< T >( maxList.at ( i ).toInteger () );
+				}
 				minMaxList [ i ] = std::array<T, 2> ( { minVal, maxVal } );
 			}
 		}

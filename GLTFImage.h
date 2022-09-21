@@ -39,7 +39,7 @@ SOFTWARE.
 
 namespace jcqt
 {
-	struct jcGLTFImage
+	struct Image
 	{
 		QImage m_image;
 		QJsonObject m_jsonObject;
@@ -76,9 +76,9 @@ namespace jcqt
 		return QString ();
 	}
 
-	jcGLTFImage createImageFromJson ( const QJsonObject& jsonObj )
+	Image createImageFromJson ( const QJsonObject& jsonObj )
 	{
-		jcGLTFImage image;
+		Image image;
 		image.m_jsonObject = jsonObj;
 		
 		try
@@ -109,34 +109,6 @@ namespace jcqt
 			return image;
 		}
 	}
-
-	class GLTFImage : public QObject
-	{
-		Q_OBJECT
-
-	public:
-		GLTFImage ( QObject* parent = nullptr );
-		GLTFImage ( const QJsonObject& jsonObj, QObject* parent = nullptr );
-		~GLTFImage ();
-
-		/*
-			According to the glTF reference page https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#reference-image, the 'bufferView' field MUST NOT be defined when the 'uri' field is defined.
-			If the 'bufferView' field is defined, then the 'mimeType' field must also be defined.
-		*/
-		static bool isValidJson ( const QJsonObject& jsonObj );
-		static QString getUriFromJson ( const QJsonObject& jsonObj );
-		static QString getMimeTypeFromJson ( const QJsonObject& jsonObj );
-		static qsizetype getBufferViewIndexFromJson ( const QJsonObject& jsonObj );
-		static QString getNameFromJson ( const QJsonObject& jsonObj );
-		static QJsonObject getExtensionsFromJson ( const QJsonObject& jsonObj );
-		static QJsonObject getExtrasFromJson ( const QJsonObject& jsonObj );
-
-		static bool loadImageFromFilename ( const QString& filename, QImage& image );
-
-	private:
-		QJsonObject m_jsonObject;
-		QImage m_image;
-	};
 }
 
 #endif // __GLTF_IMAGE_H__

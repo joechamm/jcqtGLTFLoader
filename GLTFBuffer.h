@@ -32,13 +32,12 @@ SOFTWARE.
 #include <QByteArray>
 #include <QJsonObject>
 #include <QUrl>
-#include <QDir>
 
 #include "GLTFException.h"
 
 namespace jcqt
 {
-	struct jcqtBuffer
+	struct Buffer
 	{
 		QByteArray m_data;
 		QJsonObject m_jsonObject;
@@ -55,9 +54,9 @@ namespace jcqt
 		return url.path ();
 	}
 
-	jcqtBuffer getBufferFromJson ( const QJsonObject& jsonObj )
+	Buffer getBufferFromJson ( const QJsonObject& jsonObj )
 	{
-		jcqtBuffer buffer;
+		Buffer buffer;
 
 		try
 		{
@@ -195,91 +194,6 @@ namespace jcqt
 
 		return buffer;
 	}
-
-	class GLTFBuffer : public QObject
-	{
-		Q_OBJECT
-
-	public:
-		GLTFBuffer ( QObject* parent = nullptr );
-		GLTFBuffer ( const QJsonObject& jsonObj, QObject* parent = nullptr );
-//		GLTFBuffer ( const QString& uri, qsizetype byteLength, QObject* parent = nullptr );
-		~GLTFBuffer ();
-
-		/**
-		 * isValidJson
-		 * bool
-		 * \brief quick check that the QJsonObject has valid gltf buffer format
-		 *
-		 * \param jsonObj
-		 * \return true if jsonObj contains the keys 'byteLength' and 'uri'
-		 */
-		static bool isValidJson ( const QJsonObject& jsonObj );
-		/**
-		 * isUriInternal
-		 * bool
-		 * \brief check if the uri points to internal data or external.
-		 *
-		 * \param jsonObj
-		 * \return true if
-		 */
-		static bool isUriInternal ( const QJsonObject& jsonObj );
-		
-		// glTF buffer
-		static bool jsonHasUri ( const QJsonObject& jsonObj );
-		static bool jsonHasByteLength ( const QJsonObject& jsonObj );
-		static bool jsonHasName ( const QJsonObject& jsonObj );
-		static bool jsonHasExtensions ( const QJsonObject& jsonObj );
-		static bool jsonHasExtras ( const QJsonObject& jsonObj );
-
-		static QString uriStringFromJson ( const QJsonObject& jsonObj );
-		static QString nameStringFromJson ( const QJsonObject& jsonObj );
-		static QUrl urlFromJson ( const QJsonObject& jsonObj );
-		static qsizetype byteLengthFromJson ( const QJsonObject& jsonObj );
-
-		static bool externalUriExists ( const QJsonObject& jsonObj );
-		static bool isRelativeFromJson ( const QJsonObject& jsonObj );
-		static QString uriSchemeFromJson ( const QJsonObject& jsonObj );		
-		
-		/**
-		 * setFromJson
-		 * bool
-		 * Use this to set the m_jsonObject member variable.
-		 * 
-		 * \param jsonObj
-		 * \return true if hasData returns false and jsonObj is valid
-		 */
-		bool setFromJson ( const QJsonObject& jsonObj );
-
-		bool hasData () const;
-		bool jsonValid () const;
-
-		const char* constData () const;
-		const char* data () const;
-
-		bool loadData ();
-		bool loadDataFromExternalFile (const QString& filename, qsizetype byteLength);
-		bool loadDataFromInternalString ( const QString& uriString, qsizetype byteLength );
-		/**
-		 * handleInternalData
-		 * bool
-		 * Assumes that m_jsonObject contains 'uri' key, and the value is a base64 encoded string.
-		 * 
-		 * \return 
-		 */
-		bool handleInternalData ();
-		void clearBufferData ();
-		
-		bool setDirPath ( const QString& path );
-		QString getDirPath () const;
-		QString getFilePath () const;
-	private:
-		qsizetype m_byteLength;
-		QByteArray m_bufferData;
-		QJsonObject m_jsonObject;
-		
-		QDir m_dirPath;
-	};
 }
 
 #endif // !__GLTF_BUFFER_H__

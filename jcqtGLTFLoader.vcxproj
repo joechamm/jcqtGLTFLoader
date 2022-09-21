@@ -98,8 +98,6 @@
     <Text Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GLTFBuffer.cpp" />
-    <ClCompile Include="GLTFImage.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
     <QtMoc Include="GLTFLoaderTest.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -120,9 +118,10 @@
     <None Include="jcqtGLTFLoader.pro" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GLTFCamera.h" />
     <ClInclude Include="GLTFSampler.h" />
-    <QtMoc Include="GLTFImage.h" />
-    <QtMoc Include="GLTFBuffer.h" />
+    <ClInclude Include="GLTFImage.h" />
+    <ClInclude Include="GLTFBuffer.h" />
     <ClInclude Include="GLTFBufferView.h" />
     <ClInclude Include="GLTFAccessor.h" />
     <ClInclude Include="GLTFException.h" />

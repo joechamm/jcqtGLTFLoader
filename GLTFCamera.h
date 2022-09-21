@@ -70,7 +70,7 @@ namespace jcqt
 	struct Camera
 	{
 		eCameraType m_type = eCameraType::eCameraType_NOT_SET;
-		CameraProjection m_cameraProjection;
+		CameraProjection m_cameraProjection = { .m_proj = glm::mat4 ( 1.0f ) };
 		QJsonObject m_jsonObject;
 	};
 

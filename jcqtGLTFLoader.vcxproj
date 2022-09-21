@@ -120,6 +120,7 @@
     <None Include="jcqtGLTFLoader.pro" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GLTFSampler.h" />
     <QtMoc Include="GLTFImage.h" />
     <QtMoc Include="GLTFBuffer.h" />
     <ClInclude Include="GLTFBufferView.h" />

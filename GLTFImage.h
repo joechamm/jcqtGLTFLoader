@@ -35,8 +35,81 @@ SOFTWARE.
 #include <QUrl>
 #include <QDir>
 
+#include "GLTFException.h"
+
 namespace jcqt
 {
+	struct jcGLTFImage
+	{
+		QImage m_image;
+		QJsonObject m_jsonObject;
+	};
+
+	bool isValidJsonGLTFImage ( const QJsonObject& jsonObj )
+	{
+		bool hasUri = jsonObj.contains ( "uri" );
+		bool hasBufferView = jsonObj.contains ( "bufferView" );
+		bool hasMimeType = jsonObj.contains ( "mimeType" );
+
+		if ( hasUri )
+		{
+			return !hasBufferView;
+		}
+
+		if ( hasBufferView )
+		{
+			return hasMimeType;
+		}
+
+		return false;
+	}
+
+	bool isInternal ( const QJsonObject& jsonObj )
+	{
+		// TODO: implement
+		return false;
+	}
+
+	QString getFilename ( const QJsonObject& jsonObj )
+	{
+		// TODO: implement
+		return QString ();
+	}
+
+	jcGLTFImage createImageFromJson ( const QJsonObject& jsonObj )
+	{
+		jcGLTFImage image;
+		image.m_jsonObject = jsonObj;
+		
+		try
+		{
+			if ( !isValidJsonGLTFImage ( jsonObj ) )
+			{
+				throw new GLTFException ( "INVALID JSON EXCEPTION" );
+			}
+
+			if ( jsonObj.contains ( "uri" ) )
+			{
+				if ( isInternal ( jsonObj ) )
+				{
+					// TODO: handle case
+				}
+				else
+				{
+					QString filename = getFilename ( jsonObj );
+					image.m_image.load ( filename );
+				}
+			}
+
+			return image;
+		}
+		catch ( const GLTFException& e )
+		{
+			qWarning () << e.what () << Qt::endl;
+			return image;
+		}
+	}
+
 	class GLTFImage : public QObject
 	{
 		Q_OBJECT

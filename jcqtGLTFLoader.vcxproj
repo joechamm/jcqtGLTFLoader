@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLTFCamera.h" />
+    <ClInclude Include="GLTFMaterial.h" />
     <ClInclude Include="GLTFMesh.h" />
     <ClInclude Include="GLTFNode.h" />
     <ClInclude Include="GLTFSampler.h" />

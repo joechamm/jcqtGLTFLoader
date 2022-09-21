@@ -50,6 +50,12 @@ namespace jcqt
 		QJsonObject			m_jsonObject;
 	};
 
+	struct Scene
+	{
+		QList<qsizetype>	m_nodes;
+		QJsonObject			m_jsonObject;
+	};
+
 	glm::quat getQuatFromJsonArray ( const QJsonArray& jsonArr )
 	{
 		float x = static_cast< float >( jsonArr.at ( 0 ).toDouble () );
@@ -157,6 +163,24 @@ namespace jcqt
 
 		node.m_jsonObject = jsonObj;
 		return node;
+	}
+
+	Scene createSceneFromJson ( const QJsonObject& jsonObj )
+	{
+		Scene scene;
+		if ( jsonObj.contains ( "nodes" ) )
+		{
+			QJsonArray nodes = jsonObj.value ( "nodes" ).toArray ();
+			qsizetype count = nodes.size ();
+			scene.m_nodes.resize ( count );
+			for ( qsizetype i = 0; i < count; i++ )
+			{
+				scene.m_nodes [ i ] = nodes.at ( i ).toInteger ();
+			}
+		}
+
+		scene.m_jsonObject = jsonObj;
+		return scene;
 	}
 }
 

@@ -41,7 +41,7 @@ namespace jcqt
 {
 	struct Image
 	{
-		QImage m_image;
+		QImage		m_image;
 		QJsonObject m_jsonObject;
 	};
 
@@ -79,8 +79,7 @@ namespace jcqt
 	Image createImageFromJson ( const QJsonObject& jsonObj )
 	{
 		Image image;
-		image.m_jsonObject = jsonObj;
-		
+				
 		try
 		{
 			if ( !isValidJsonGLTFImage ( jsonObj ) )
@@ -101,13 +100,15 @@ namespace jcqt
 				}
 			}
 
+			image.m_jsonObject = jsonObj;
 			return image;
 		}
 		catch ( const GLTFException& e )
 		{
-			qWarning () << e.what () << Qt::endl;
-			return image;
+			qWarning () << e.what () << Qt::endl;			
 		}
+
+		return image;
 	}
 }
 

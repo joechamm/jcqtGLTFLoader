@@ -79,5 +79,8 @@
     <ClInclude Include="GLTFNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GLTFMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

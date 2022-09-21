@@ -82,5 +82,8 @@
     <ClInclude Include="GLTFMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GLTFSkin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

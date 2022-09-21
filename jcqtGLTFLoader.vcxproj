@@ -127,6 +127,7 @@
     <ClInclude Include="GLTFBufferView.h" />
     <ClInclude Include="GLTFAccessor.h" />
     <ClInclude Include="GLTFException.h" />
+    <ClInclude Include="GLTFSkin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

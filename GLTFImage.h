@@ -64,16 +64,82 @@ namespace jcqt
 		return false;
 	}
 
-	bool isInternal ( const QJsonObject& jsonObj )
+	bool isInternal ( const QString& uriStr )
 	{
-		// TODO: implement
+		return uriStr.startsWith ( "data:", Qt::CaseInsensitive );
+	}
+
+	bool getImageFromInternal ( const QString& uriStr, QImage& image, const char* mimeType )
+	{
+		try
+		{
+			const QString base64Str = "base64,";
+			qsizetype idxBase64 = uriStr.indexOf ( base64Str );
+			if ( -1 != idxBase64 )
+			{
+				QString dataStr = uriStr.sliced ( idxBase64 + base64Str.size () );
+				QByteArray bufferData = dataStr.toUtf8 ();
+				QByteArray::FromBase64Result bufferDataDecoded = QByteArray::fromBase64Encoding ( bufferData );
+				if ( bufferDataDecoded.decodingStatus != QByteArray::Base64DecodingStatus::Ok )
+				{
+					throw new GLTFException ( "BASE 64 DECODING FAILED" );
+				}
+
+				QByteArray decodedData = bufferDataDecoded.decoded;
+
+				image = QImage::fromData ( decodedData, mimeType );
+				return true;
+			}
+
+			const QString octStreamStr = "application/octet-stream,";
+			qsizetype idxOctStream = uriStr.indexOf ( octStreamStr );
+			if ( -1 != idxOctStream )
+			{
+				QString dataStr = uriStr.sliced ( idxOctStream + octStreamStr.size () );
+				QByteArray bufferData = dataStr.toUtf8 ();
+				QByteArray::FromBase64Result bufferDataDecoded = QByteArray::fromBase64Encoding ( bufferData );
+				if ( bufferDataDecoded.decodingStatus != QByteArray::Base64DecodingStatus::Ok )
+				{
+					throw new GLTFException ( "BASE 64 DECODING FAILED" );
+				}
+
+				QByteArray decodedData = bufferDataDecoded.decoded;
+
+				image = QImage::fromData ( decodedData, mimeType );
+				return true;
+			}
+
+			const QString gltfBufferStr = "application/gltf-buffer,";
+			qsizetype gltfBufferIdx = uriStr.indexOf ( gltfBufferStr );
+			if ( -1 != gltfBufferIdx )
+			{
+				QString dataStr = uriStr.sliced ( gltfBufferIdx + gltfBufferStr.size () );
+				QByteArray bufferData = dataStr.toUtf8 ();
+				QByteArray::FromBase64Result bufferDataDecoded = QByteArray::fromBase64Encoding ( bufferData );
+				if ( bufferDataDecoded.decodingStatus != QByteArray::Base64DecodingStatus::Ok )
+				{
+					throw new GLTFException ( "BASE 64 DECODING FAILED" );
+				}
+
+				QByteArray decodedData = bufferDataDecoded.decoded;
+
+				image = QImage::fromData ( decodedData, mimeType );
+				return true;
+			}
+		}
+		catch ( const GLTFException& e )
+		{
+			qWarning () << e.what () << Qt::endl;
+			return false;
+		}		
+
 		return false;
 	}
 
-	QString getFilename ( const QJsonObject& jsonObj )
+	QString getFilename ( const QString& uriStr )
 	{
-		// TODO: implement
-		return QString ();
+		QUrl url ( uriStr );
+		return url.path ();
 	}
 
 	Image createImageFromJson ( const QJsonObject& jsonObj )
@@ -89,13 +155,22 @@ namespace jcqt
 
 			if ( jsonObj.contains ( "uri" ) )
 			{
-				if ( isInternal ( jsonObj ) )
+				QString uriStr = jsonObj.value ( "uri" ).toString ();
+				if ( isInternal ( uriStr))
 				{
-					// TODO: handle case
+					QString mimeType = jsonObj.value ( "mimeType" ).toString ();
+					if ( mimeType.isEmpty () ) // use image/jpeg for default mimeType
+					{
+						getImageFromInternal ( uriStr, image.m_image, "image/jpeg");
+					}
+					else
+					{
+						getImageFromInternal ( uriStr, image.m_image, mimeType.toStdString ().c_str () );
+					}					
 				}
 				else
 				{
-					QString filename = getFilename ( jsonObj );
+					QString filename = getFilename ( uriStr );
 					image.m_image.load ( filename );
 				}
 			}

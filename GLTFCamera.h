@@ -112,7 +112,8 @@ namespace jcqt
 		{
 			qWarning () << e.what () << Qt::endl;
 		}
-
+		// don't return uninitialized 
+		proj.m_proj = glm::mat4 (0.0f );
 		return proj;
 	}
 

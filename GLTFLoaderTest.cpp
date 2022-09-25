@@ -43,41 +43,60 @@ private slots:
 	
 	void testLoadGLTF ()
 	{
+		bool gotAccessors, gotAnimations, gotBuffers, gotBufferViews, gotCameras, gotImages, gotMaterials, gotMeshes, gotNodes, gotSamplers, gotScenes, gotSkins, gotTextures;
 		QString testFilename = ":/test/test.gltf";
 		jcqt::GLTFLoader loader;
 		bool loadSuccess = loader.loadGLTF ( testFilename );
 		if ( loadSuccess )
 		{
+			gotAccessors = loader.getAccessors ();
+			gotAnimations = loader.getAnimations ();
+			gotBuffers = loader.getBuffers ();
+			gotBufferViews = loader.getBufferViews ();
+			gotCameras = loader.getCameras ();
+			gotImages = loader.getImages ();
+			gotMaterials = loader.getMaterials ();
+			gotMeshes = loader.getMeshes ();
+			gotNodes = loader.getNodes ();
+			gotSamplers = loader.getSamplers ();
+			gotScenes = loader.getScenes ();
+			gotSkins = loader.getSkins ();
+			gotTextures = loader.getTextures ();
+			
 			qDebug () << "loadGLTF SUCCESS!" << Qt::endl;
 			loader.printJsonDocument ( 8 );
 		}
 		else
 		{
 			qDebug () << "loadGLTF FAILED!" << Qt::endl;
+			gotAccessors = false;
+			gotAnimations = false;
+			gotBuffers = false;
+			gotBufferViews = false;
+			gotCameras = false;
+			gotImages = false;
+			gotMaterials = false;
+			gotMeshes = false;
+			gotNodes = false;
+			gotSamplers = false;
+			gotScenes = false;
+			gotSkins = false;
+			gotTextures = false;
 		}
 		QVERIFY ( loadSuccess );
-	}
-
-	void testLoadGLTFBuffers ()
-	{
-		bool bufferSuccess = false;
-		QString testFilename = ":/test/test.gltf";
-		jcqt::GLTFLoader loader;
-		bool loadSuccess = loader.loadGLTF ( testFilename );
-		if ( loadSuccess )
-		{
-			QJsonObject jsonBuff0 = loader.getBuffer ( 0 );
-			if (!jsonBuff0.isEmpty () )
-			{
-				jcqt::GLTFBuffer gltfBuff0 ( jsonBuff0 );
-				bufferSuccess = gltfBuff0.loadData ();
-				if ( bufferSuccess )
-				{
-					qDebug () << "GLTFBuffer::loadData() SUCCESS!" << Qt::endl << "Data:" << Qt::endl << gltfBuff0.constData () << Qt::endl;
-				}
-			}
-		}
-		QVERIFY ( bufferSuccess );
+		QVERIFY ( gotAccessors );
+		QVERIFY ( gotAnimations );
+		QVERIFY ( gotBuffers );
+		QVERIFY ( gotBufferViews );
+		QVERIFY ( gotCameras );
+		QVERIFY ( gotImages );
+		QVERIFY ( gotMaterials );
+		QVERIFY ( gotMeshes );
+		QVERIFY ( gotNodes );
+		QVERIFY ( gotSamplers );
+		QVERIFY ( gotScenes );
+		QVERIFY ( gotSkins );
+		QVERIFY ( gotTextures );
 	}
 
 	void cleanupTestCase ()

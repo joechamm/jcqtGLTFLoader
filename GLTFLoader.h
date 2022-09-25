@@ -33,6 +33,21 @@ SOFTWARE.
 #include <QObject>
 #include <QJsonDocument>
 
+#include "GLTFAccessor.h"
+#include "GLTFAnimation.h"
+#include "GLTFBuffer.h"
+#include "GLTFBufferView.h"
+#include "GLTFCamera.h"
+#include "GLTFImage.h"
+#include "GLTFMaterial.h"
+#include "GLTFMesh.h"
+#include "GLTFNode.h"
+#include "GLTFSampler.h"
+#include "GLTFSkin.h"
+#include "GLTFException.h"
+
+#include <QList>
+
 namespace jcqt
 {
 	class GLTFLoader : public QObject
@@ -47,7 +62,9 @@ namespace jcqt
 		bool isJsonArray () const;
 		bool isJsonObject () const;
 		QJsonArray jsonArray () const;
+		QJsonArray jsonArray ( const QString& arrKey ) const;
 		QJsonObject jsonObject () const;
+		QJsonObject jsonObject ( const QString& objKey ) const;
 
 		bool containsAtTopLevel ( const QString& key ) const;
 
@@ -58,8 +75,37 @@ namespace jcqt
 		void printJsonArray ( const QJsonArray& arr, int maxDepth = 8 ) const;
 		void printJsonDocument ( int maxDepth = 8 ) const;
 
+		bool getScenes ();
+		bool getNodes ();
+		bool getMeshes ();
+		bool getBuffers ();
+		bool getBufferViews ();
+		bool getAccessors ();
+		bool getCameras ();
+		bool getSkins ();
+		bool getAnimations ();
+		bool getMaterials ();
+		bool getTextures ();
+		bool getSamplers ();
+		bool getImages ();
+		void getAll ();
+
 	private:
-		QJsonDocument m_document;
+		QJsonDocument		m_document;
+
+		QList<Scene>		m_scenes;
+		QList<Node>			m_nodes;
+		QList<Mesh>			m_meshes;
+		QList<Buffer>		m_buffers;
+		QList<BufferView>	m_bufferViews;
+		QList<Accessor>		m_accessors;
+		QList<Camera>		m_cameras;
+		QList<Skin>			m_skins;
+		QList<Animation>	m_animations;
+		QList<Material>		m_materials;
+		QList<Texture>		m_textures;
+		QList<Sampler>		m_samplers;
+		QList<Image>		m_images;
 	};
 }
 

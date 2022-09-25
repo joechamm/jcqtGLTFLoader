@@ -32,6 +32,7 @@ SOFTWARE.
 #include <QByteArray>
 #include <QJsonObject>
 #include <QUrl>
+#include <QFile>
 
 #include "GLTFException.h"
 
@@ -54,7 +55,7 @@ namespace jcqt
 		return url.path ();
 	}
 
-	Buffer getBufferFromJson ( const QJsonObject& jsonObj )
+	Buffer createBufferFromJson ( const QJsonObject& jsonObj )
 	{
 		Buffer buffer;
 

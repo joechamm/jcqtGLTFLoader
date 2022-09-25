@@ -195,6 +195,8 @@ namespace jcqt
 		{
 			qWarning () << e.what () << Qt::endl;
 		}
+
+		return camera;
 	}
 }
 

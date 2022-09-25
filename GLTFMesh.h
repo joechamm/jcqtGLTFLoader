@@ -34,6 +34,7 @@ SOFTWARE.
 #include <QList>
 
 #include "GLTFException.h"
+#include "GLTFNode.h"
 
 namespace jcqt
 {
@@ -119,15 +120,15 @@ namespace jcqt
 		}
 	}
 
-	void getWeightsFromJsonArray ( const QJsonArray& jsonArr, QList<float>& weights )
-	{
-		qsizetype count = jsonArr.size ();
-		weights.resize ( count );
-		for ( qsizetype i = 0; i < count; i++ )
-		{
-			weights [ i ] = static_cast< float >( jsonArr.at ( i ).toDouble ( 1.0 ) );
-		}
-	}
+	//void getWeightsFromJsonArray ( const QJsonArray& jsonArr, QList<float>& weights )
+	//{
+	//	qsizetype count = jsonArr.size ();
+	//	weights.resize ( count );
+	//	for ( qsizetype i = 0; i < count; i++ )
+	//	{
+	//		weights [ i ] = static_cast< float >( jsonArr.at ( i ).toDouble ( 1.0 ) );
+	//	}
+	//}
 
 	Mesh createMeshFromJson ( const QJsonObject& jsonObj )
 	{
